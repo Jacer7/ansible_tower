@@ -1,0 +1,1 @@
+terraform apply -var-file=env/dev/variables.tfvars -var-file=shared.tfvars
