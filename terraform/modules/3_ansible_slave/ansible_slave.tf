@@ -1,12 +1,21 @@
 ##########################
 # SSH
 ##########################
+resource "tls_private_key" "ansible_slave_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  public_key = tls_private_key.ansible_slave_key.public_key_openssh
+  key_name = var.key_name
+}
 
 ############################################################################################
 #                                           BASTION                                        #
 ############################################################################################
 
-resource "aws_instance" "bastion" {
+resource "aws_instance" "ansible_slave" {
   # Variables
   count                        = 3
   ami                          = var.bastion_ami  
