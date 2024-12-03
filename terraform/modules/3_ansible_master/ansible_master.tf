@@ -124,9 +124,13 @@ resource "aws_instance" "ansible_master" {
 
   ##############################
 
-
-
-
+  cat <<EOT > /home/ubuntu/.ssh/ansible_slave_private_key.pem
+  ${var.ansible_slave_private_key}
+  EOT
+  # Change ownership to ubuntu
+  sudo chown ubuntu:ubuntu /home/ubuntu/.ansible/ansible_slave_private_key.pem
+  sudo chown jacer7:jacer7 /home/ubuntu/.ansible/ansible_slave_private_key.pem
+  chmod 600 /home/ubuntu/.ansible/ansible_slave_private_key.pem
   echo "Setup Completed !!"
 
   EOF

@@ -39,20 +39,9 @@ variable "common_iam_instance_profile" {
     type        = string
     description = "Bastion Host IAM Instance Profile"
 }
-
-# variable "bastion_iam_role" {
-#     type        = string
-#     description = "Bastion Host IAM Instance Profile"
-# }
-
-# variable "bastion_iam_role_policy" {
-#     type        = string
-#     description = "Bastion Host IAM Role"
-# }
-
-# variable "bastion_iam_instance_profile" {
-#     type        = string
-#     description = "Bastion Host IAM Instance Profile"
-  
-# }
+# To add slave key to Master
+variable "ansible_slave_private_key" {
+    type        = string
+    description = "Pem key for ansible slave"
+}
 

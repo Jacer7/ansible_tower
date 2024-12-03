@@ -1,4 +1,4 @@
-output "private_key" {
+output "ansible_slave_pemkey" {
   value     = tls_private_key.ansible_slave_key.private_key_pem
   sensitive = true
 }
