@@ -1,20 +1,27 @@
 name: Ansible-Tower
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       directory:
-#         description: 'Select the directory to run Terraform'
-#         required: true
-#         default: 'terraform/'
-#         type: choice
-#         options:
-#           - 'terraform'
-#           - '1_certificates'
 on:
-    push:
-      branches: [ "dev", "prod" ]
-    pull_request:    
+  workflow_dispatch:
+    inputs:
+      # directory:
+      #   description: 'Select the directory to run Terraform'
+      #   required: true
+      #   default: 'terraform'
+
+      actions:
+        description: 'Choose Terraform action (plan/apply/destroy)'
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+          - 'plan'
+          - 'apply'
+          - 'destroy'
+
+      show_sensitive_output:
+        description: 'Show sensitive output (for apply only)'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
