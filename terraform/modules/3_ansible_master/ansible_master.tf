@@ -39,7 +39,7 @@ resource "aws_instance" "ansible_master" {
   subnet_id                    = var.public_subnet
   security_groups              = var.bastion_security_groups
   # Other 
-  iam_instance_profile         = aws_iam_instance_profile.ec2_instance_connect_profile.name
+  iam_instance_profile         = var.common_iam_instance_profile
   key_name                     = aws_key_pair.generated_key.key_name
 
   associate_public_ip_address  = true

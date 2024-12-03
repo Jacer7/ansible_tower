@@ -34,20 +34,24 @@ variable "bastion_security_groups" {
     description = "Bastion Host Security Groups"
 }
 
-# IAM
-variable "bastion_iam_role" {
+# # IAM
+variable "common_iam_instance_profile" {
     type        = string
-    description = "Bastion Host IAM Instance Profile"
+    description = "Common IAM Instance Profile"
 }
 
-variable "bastion_iam_role_policy" {
-    type        = string
-    description = "Bastion Host IAM Role"
-}
+# variable "bastion_iam_role" {
+#     type        = string
+#     description = "Bastion Host IAM Instance Profile"
+# }
 
-variable "bastion_iam_instance_profile" {
-    type        = string
-    description = "Bastion Host IAM Instance Profile"
-  
-}
+# variable "bastion_iam_role_policy" {
+#     type        = string
+#     description = "Bastion Host IAM Role"
+# }
+
+# variable "bastion_iam_instance_profile" {
+#     type        = string
+#     description = "Bastion Host IAM Instance Profile"
+# }
 
