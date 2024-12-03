@@ -31,6 +31,6 @@ output "ansible_master_pemkey" {
 }
 
 output "ansible_slave_pemkey" {
-  value     = module.ansible_slave.private_key
+  value     = module.ansible_slave.ansible_slave_pemkey
   sensitive = true
 }
