@@ -24,6 +24,32 @@ module "security_groups" {
   vpc_id = var.vpc_id
 }
 
+module "bastion_host" {
+  source = "./modules/3_ansible_master"
+
+  bastion_ami                  = var.bastion_ami
+  instacne_type                = var.instacne_type
+  public_subnet                = module.vpc.public_subnet_ids[0]
+  bastion_security_groups      = [module.security_groups.ansible_security_group_id] # coming from the security group module
+  key_name                     = lower(format("%s_%s_ansible_master_key", local.common_tags["Application"], var.env_type))
+  bastion_iam_role             = lower(format("%s_%s_bastion_iam_role", local.common_tags["Application"], var.env_type))
+  bastion_iam_role_policy      = lower(format("%s_%s_bastion_role_policy", local.common_tags["Application"], var.env_type))
+  bastion_iam_instance_profile = lower(format("%s_%s_bastion_instance_profile", local.common_tags["Application"], var.env_type))
+
+  # # Pass backend server private key and IP to bastion_host module
+  # backend_private_key      = module.backend_server.backend_private_key
+  # backend_private_ip       = module.backend_server.backend_private_ip
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = upper(format("bastion-host-%s-%s", var.env_type, var.components["Infra"]))
+
+    }
+  )
+}
+
+
 
 module "bastion_host" {
   source = "./modules/3_ansible_slave"
@@ -32,14 +58,10 @@ module "bastion_host" {
   instacne_type                = var.instacne_type
   public_subnet                = module.vpc.public_subnet_ids[0]
   bastion_security_groups      = [module.security_groups.ansible_security_group_id] # coming from the security group module
-  key_name                     = lower(format("%s_%s_bastion_key", local.common_tags["Application"], var.env_type))
+  key_name                     = lower(format("%s_%s_ansible_slave_key", local.common_tags["Application"], var.env_type))
   bastion_iam_role             = lower(format("%s_%s_bastion_iam_role", local.common_tags["Application"], var.env_type))
   bastion_iam_role_policy      = lower(format("%s_%s_bastion_role_policy", local.common_tags["Application"], var.env_type))
   bastion_iam_instance_profile = lower(format("%s_%s_bastion_instance_profile", local.common_tags["Application"], var.env_type))
-
-  # # Pass backend server private key and IP to bastion_host module
-  # backend_private_key      = module.backend_server.backend_private_key
-  # backend_private_ip       = module.backend_server.backend_private_ip
 
   tags = merge(
     local.common_tags,

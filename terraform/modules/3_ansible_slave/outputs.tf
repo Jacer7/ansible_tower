@@ -3,10 +3,6 @@ output "private_key" {
   sensitive = true
 }
 
-output "ansible_master_public_ip" {
-  value = aws_instance.ansible_master.public_ip
-}
-
 output "bastion_public_ip_first" {
   value       = aws_instance.bastion[0].public_ip
   description = "Public IP of the first bastion instance"
