@@ -69,18 +69,7 @@ resource "aws_instance" "ansible_master" {
   sudo apt update -y
   sudo apt upgrade -y
 
-  echo "Updating SSH configuration..."
   echo "---------------------------"
-  cat <<EOT >> /etc/ssh/sshd_config
-  PubkeyAcceptedAlgorithms +ssh-rsa
-  AllowAgentForwarding yes
-  AllowTcpForwarding yes
-  GatewayPorts yes
-  EOT
-
-  sudo chmod 400 /etc/ssh/sshd_config
-  sudo service ssh restart
-
   echo "Python installation..."
   echo "---------------------------"
   sudo apt install python3-pip -y
@@ -120,11 +109,14 @@ resource "aws_instance" "ansible_master" {
   sudo chown datascientest /home/datascientest/.ssh/know_hosts
 
   sudo apt-add-repository --yes --update ppa:ansible/ansible
-  sudo apt-get install ansible
+  echo "---------------------------"
+  echo "Installing Ansible..."
+  sudo apt-get install ansible -y
 
   ##############################
-
-  cat <<EOT > /home/ubuntu/.ssh/ansible_slave_private_key.pem
+  echo "User: $(whoami)"
+  echo "---------------------------"
+  cat <<EOT > /home/ubuntu/.ansible/ansible_slave_private_key.pem
   ${var.ansible_slave_private_key}
   EOT
   # Change ownership to ubuntu
