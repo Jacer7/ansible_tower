@@ -64,9 +64,10 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         cd terraform
+        ls -la
         terraform init -backend-config=env/${{ github.ref_name }}/backend.conf
         terraform fmt
-        terraform apply -auto-approve -var-file=${{ github.ref_name }}/variables.tfvars -var-file=shared.tfvars
+        terraform apply -auto-approve -var-file=env/${{ github.ref_name }}/variables.tfvars -var-file=shared.tfvars
         echo "Sensitive output: ${{ github.event.inputs.show_sensitive_output }}"
 
     - name: Terraform Apply Backend and Output
