@@ -2,39 +2,13 @@
 # SSH
 ##########################
 
-resource "tls_private_key" "example" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "generated_key" {
-  public_key = tls_private_key.example.public_key_openssh
-  key_name = var.key_name
-}
-
-
-#Create a Data Source aws_ami to select the friend available in your region
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"] # Matches Ubuntu 22.04 LTS (Jammy)
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
 ############################################################################################
 #                                           BASTION                                        #
 ############################################################################################
 
 resource "aws_instance" "bastion" {
   # Variables
-  count                        = 4
+  count                        = 3
   ami                          = var.bastion_ami  
   instance_type                = var.instacne_type
   subnet_id                    = var.public_subnet
@@ -127,7 +101,7 @@ resource "aws_instance" "bastion" {
   tags = merge(
     var.tags,
     {
-      Name = "${var.tags["Name"]}-${count.index + 1}" # Append instance-specific index to Name tag
+      Name = "${var.tags["Name"]}-slave-${count.index + 1}" # Append instance-specific index to Name tag
     }
   )
 }

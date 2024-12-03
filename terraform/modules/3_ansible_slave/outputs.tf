@@ -3,9 +3,9 @@ output "private_key" {
   sensitive = true
 }
 
-# output "bastion_public_ip" {
-#   value = aws_instance.bastion.public_ip
-# }
+output "ansible_master_public_ip" {
+  value = aws_instance.ansible_master.public_ip
+}
 
 output "bastion_public_ip_first" {
   value       = aws_instance.bastion[0].public_ip
@@ -20,9 +20,4 @@ output "bastion_public_ip_second" {
 output "bastion_public_ip_third" {
   value       = aws_instance.bastion[2].public_ip
   description = "Public IP of the third bastion instance"
-}
-
-output "bastion_public_ip_fourth" {
-  value       = aws_instance.bastion[3].public_ip
-  description = "Public IP of the fourth bastion instance"
 }

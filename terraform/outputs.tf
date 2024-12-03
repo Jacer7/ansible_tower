@@ -25,6 +25,6 @@ output "bastion_public_ip_second" {
 output "bastion_public_ip_third" {
   value = module.bastion_host.bastion_public_ip_third
 }
-output "bastion_public_ip_fourth" {
-  value = module.bastion_host.bastion_public_ip_fourth
+output "ansible_master_public_ip" {
+  value = module.bastion_host.ansible_master_public_ip
 }

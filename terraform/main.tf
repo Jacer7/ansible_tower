@@ -26,7 +26,7 @@ module "security_groups" {
 
 
 module "bastion_host" {
-  source = "./modules/3_bastion"
+  source = "./modules/3_ansible_slave"
 
   bastion_ami                  = var.bastion_ami
   instacne_type                = var.instacne_type
