@@ -93,5 +93,5 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         cd terraform
-        terraform init -backend-config=${{ github.ref_name }}/backend.conf
+        terraform init -backend-config=env/${{ github.ref_name }}/backend.conf
         terraform destroy -auto-approve -var-file=env/${{ github.ref_name }}/variables.tfvars -var-file=shared.tfvars
