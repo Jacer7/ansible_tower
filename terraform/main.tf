@@ -24,7 +24,7 @@ module "security_groups" {
   vpc_id = var.vpc_id
 }
 
-module "bastion_host" {
+module "ansible_master" {
   source = "./modules/3_ansible_master"
 
   bastion_ami                  = var.bastion_ami
@@ -50,8 +50,7 @@ module "bastion_host" {
 }
 
 
-
-module "bastion_host" {
+module "ansible_slave" {
   source = "./modules/3_ansible_slave"
 
   bastion_ami                  = var.bastion_ami
